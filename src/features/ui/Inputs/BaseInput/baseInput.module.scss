@@ -1,0 +1,37 @@
+input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  padding: 10px 15px;
+  border: 2px solid var(--primary-color);
+  font-size: var(--text-s);
+  transition: 300ms;
+
+  &:hover {
+    border: 2px solid var(--primary-color-hover);
+  }
+
+  &:focus {
+    border: 2px solid var(--primary-color-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.rounded {
+  border-radius: 40px;
+}
+
+.base {
+  border-radius: 5px;
+}

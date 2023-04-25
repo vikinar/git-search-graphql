@@ -1,0 +1,20 @@
+.wrapper {
+  padding: 0 0 25px 0;
+  min-height: 100vh;
+  background-color: var(--background-color-main);
+  margin: 0 auto;
+
+  .container {
+    height: 100%;
+    padding: 0 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 20px;
+    max-width: 960px;
+    margin: 20px auto;
+  }
+  .pagination{
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "fix": true,
+  "extends": "stylelint-config-standard-scss",
+  "cache": true
+}
