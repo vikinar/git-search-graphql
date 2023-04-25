@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import React, { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Repository } from '@api/repolist/search/types'
+import { Repository } from '@api/repolist/types'
 import { MainButton } from '@ui/Buttons/MainButton'
 import { Text, Title } from '@ui/Typography'
 

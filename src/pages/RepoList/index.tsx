@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
-import { Repository } from '@api/repolist/search/types'
+import { Repository } from '@api/repolist/types'
 import {
   fetchUserRepositories,
   setUserCurrentPage,

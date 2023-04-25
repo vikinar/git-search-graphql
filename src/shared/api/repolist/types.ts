@@ -20,6 +20,12 @@ export type Repository = {
     ]
   }
 }
+
+export interface RepositoryState {
+  repository?: Repository
+  isLoading: boolean
+  error: any
+}
 export interface RepositoryNode {
   node: Repository
 }

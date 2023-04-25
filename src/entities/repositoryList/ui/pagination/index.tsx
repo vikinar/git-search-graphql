@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-import { Repository } from '@api/repolist/search/types'
+import { Repository } from '@api/repolist/types'
 import { MainButton } from '@ui/Buttons/MainButton'
 
 interface Props {

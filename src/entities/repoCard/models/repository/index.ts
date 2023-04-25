@@ -1,6 +1,6 @@
 import { client } from '@api/base'
 import { GET_REPO_BY_ID } from '@api/repolist/repository/query'
-import { RepositoryState } from '@api/repolist/repository/types'
+import { RepositoryState } from '@api/repolist/types'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState: RepositoryState = {

@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import moment from 'moment/moment'
 import React from 'react'
 
-import { Repository } from '@api/repolist/search/types'
+import { Repository } from '@api/repolist/types'
 import { Text, Title } from '@ui/Typography'
 
 import styles from './repoCard.module.scss'
