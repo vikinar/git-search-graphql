@@ -31,7 +31,7 @@ export const fetchRepositories = createAsyncThunk(
     const variables: SearchRepositoriesVariables = {
       query: `topic:${searchQuery}`,
       first: perPage,
-      after: currentPage !== 1 ? state.repositories.endCursor : undefined,
+      after: currentPage !== 1 ? btoa(`cursor:${startIndex}`) : undefined,
     }
     const { data } = await client.query({
       query: SEARCH_REPOSITORIES_QUERY,

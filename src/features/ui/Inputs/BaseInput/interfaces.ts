@@ -1,4 +1,9 @@
-import { CSSProperties, ChangeEventHandler, RefObject } from 'react'
+import {
+  CSSProperties,
+  ChangeEventHandler,
+  MouseEventHandler,
+  RefObject,
+} from 'react'
 
 export interface IBaseInputProps {
   value?: string
@@ -13,4 +18,5 @@ export interface IBaseInputProps {
   ref?: RefObject<HTMLInputElement>
   hasError?: boolean
   variant: 'rounded' | 'base'
+  autocomplete?: 'on' | 'off'
 }

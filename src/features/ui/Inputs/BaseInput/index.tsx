@@ -20,6 +20,7 @@ export const BaseInput = forwardRef<HTMLInputElement, IBaseInputProps>(
       variant,
       onChange,
       onBlur,
+      autocomplete,
     },
     ref
   ) => {
@@ -38,6 +39,7 @@ export const BaseInput = forwardRef<HTMLInputElement, IBaseInputProps>(
         autoFocus={autofocus}
         id={id}
         onChange={onChange}
+        autoComplete={autocomplete}
         onBlur={onBlur}
       />
     )

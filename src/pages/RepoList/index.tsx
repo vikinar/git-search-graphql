@@ -42,25 +42,42 @@ const RepositoryList: React.FC = () => {
     totalCount: userReposTotalCount,
   } = useAppSelector((state: RootState) => state.userRepositories)
 
-  useEffect(() => {
-    dispatch(setUserCurrentPage(1))
-    dispatch(fetchUserRepositories({ currentPage: 1 }))
-  }, [dispatch])
+  const memoPage = parseInt(sessionStorage.getItem('page') as string)
+  const memoSearchField = sessionStorage.getItem('searchField')
 
   useEffect(() => {
-    if (debouncedSearchValue) {
+    if (!searchTerm) {
+      dispatch(setUserCurrentPage(1))
+      dispatch(fetchUserRepositories({ currentPage: 1 }))
+    }
+  }, [dispatch, searchTerm])
+
+  useEffect(() => {
+    if (debouncedSearchValue && (!memoSearchField || !memoPage)) {
       dispatch(setSearchQuery(debouncedSearchValue))
       dispatch(setCurrentPage(1))
       dispatch(
         fetchRepositories({ searchQuery: debouncedSearchValue, currentPage: 1 })
       )
+    } else if (!debouncedSearchValue && (memoSearchField || memoPage)) {
+      dispatch(setSearchQuery(memoSearchField))
+      dispatch(setCurrentPage(memoPage))
+      dispatch(
+        fetchRepositories({
+          searchQuery: memoSearchField as string,
+          currentPage: memoPage,
+        })
+      )
     }
-  }, [debouncedSearchValue])
+  }, [debouncedSearchValue, memoSearchField, memoPage])
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
+    sessionStorage.setItem('searchField', `${e.target.value}`)
   }
 
   const handlePageChange = (page: number, user: boolean) => {
+    sessionStorage.setItem('page', `${page}`)
+    console.log(currentPage)
     !user ? dispatch(setCurrentPage(page)) : dispatch(setUserCurrentPage(page))
     !user
       ? dispatch(fetchRepositories({ searchQuery, currentPage: page }))
@@ -72,20 +89,20 @@ const RepositoryList: React.FC = () => {
       headerChildren={
         <BaseInput
           type="search"
-          value={searchTerm}
+          value={searchTerm || (memoSearchField as string)}
           onChange={(e) => handleSearchChange(e)}
           id={'search'}
           variant={'rounded'}
           placeholder={'Find repository...'}
+          autocomplete={'on'}
         />
       }
       pagination={
-        (hasNextPage || userReposHasNextPage) &&
         !isLoading &&
         !userReposIsLoading && (
           <Pagination
             handlePageChange={handlePageChange}
-            currentPage={currentPage}
+            currentPage={memoPage || currentPage}
             repositories={repositories}
             userRepositories={userRepositories}
             userReposCurrentPage={userReposCurrentPage}

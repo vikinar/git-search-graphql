@@ -7,5 +7,15 @@ export const client = new ApolloClient({
   headers: {
     Authorization: `Bearer ${ACCESS_TOKEN}`,
   },
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          viewer: {
+            merge: true,
+          },
+        },
+      },
+    },
+  }),
 })
