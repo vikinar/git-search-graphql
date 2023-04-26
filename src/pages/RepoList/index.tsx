@@ -46,7 +46,7 @@ const RepositoryList: React.FC = () => {
   const memoSearchField = sessionStorage.getItem('searchField')
 
   useEffect(() => {
-    if (!searchTerm.length) {
+    if (!searchTerm) {
       dispatch(setUserCurrentPage(1))
       dispatch(fetchUserRepositories({ currentPage: 1 }))
     }
@@ -117,11 +117,12 @@ const RepositoryList: React.FC = () => {
 
       {!isLoading &&
         !userReposIsLoading &&
-        !repositories.length &&
+        !searchTerm &&
         userRepositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
       {!isLoading &&
+        searchTerm &&
         repositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}

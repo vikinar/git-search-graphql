@@ -41,7 +41,7 @@ export const Pagination: React.FC<Props> = ({
       pageNumbers.push(i)
     }
     return pageNumbers
-  }, [totalCount, repositories])
+  }, [totalCount, userReposTotalCount, repositories])
   return (
     <>
       {pageNumbers.map((page) => (
