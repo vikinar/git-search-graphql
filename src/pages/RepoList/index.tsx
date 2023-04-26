@@ -46,7 +46,7 @@ const RepositoryList: React.FC = () => {
   const memoSearchField = sessionStorage.getItem('searchField')
 
   useEffect(() => {
-    if (!searchTerm) {
+    if (!searchTerm.length) {
       dispatch(setUserCurrentPage(1))
       dispatch(fetchUserRepositories({ currentPage: 1 }))
     }
