@@ -118,11 +118,11 @@ const RepositoryList: React.FC = () => {
       {!isLoading &&
         !userReposIsLoading &&
         !searchTerm &&
+        !memoSearchField &&
         userRepositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
       {!isLoading &&
-        searchTerm &&
         repositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
