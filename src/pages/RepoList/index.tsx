@@ -73,11 +73,11 @@ const RepositoryList: React.FC = () => {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
     sessionStorage.setItem('searchField', `${e.target.value}`)
+    sessionStorage.removeItem('page')
   }
 
   const handlePageChange = (page: number, user: boolean) => {
     sessionStorage.setItem('page', `${page}`)
-    console.log(currentPage)
     !user ? dispatch(setCurrentPage(page)) : dispatch(setUserCurrentPage(page))
     !user
       ? dispatch(fetchRepositories({ searchQuery, currentPage: page }))

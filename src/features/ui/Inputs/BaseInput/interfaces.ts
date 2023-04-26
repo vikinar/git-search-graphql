@@ -1,9 +1,4 @@
-import {
-  CSSProperties,
-  ChangeEventHandler,
-  MouseEventHandler,
-  RefObject,
-} from 'react'
+import { CSSProperties, ChangeEventHandler, RefObject } from 'react'
 
 export interface IBaseInputProps {
   value?: string

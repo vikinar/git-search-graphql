@@ -22,8 +22,6 @@ export const Pagination: React.FC<Props> = ({
 }) => {
   const ITEMS_PER_PAGE = 10
 
-  const memoPage = parseInt(sessionStorage.getItem('page') as string)
-
   const pageNumbers = useMemo(() => {
     let pageCount: number
     if (!repositories.length) {
