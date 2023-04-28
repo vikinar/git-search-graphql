@@ -12,14 +12,18 @@ import {
 } from '@entities/repositoryList/models/search'
 import ListItemCard from '@entities/repositoryList/ui/listItem'
 import { Pagination } from '@entities/repositoryList/ui/pagination'
-import { useAppDispatch, useAppSelector } from '@features/hooks/store'
+import {
+  useAppDispatch,
+  useAppSelector,
+  useAppThunkDispatch,
+} from '@features/hooks/store'
 import useDebounce from '@features/hooks/useDebounce'
 import { RootState } from '@src/app/store'
 import { BaseInput } from '@ui/Inputs/BaseInput'
 import { BaseLayout } from '@ui/Layout/BaseLayout'
 
 const RepositoryList: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppThunkDispatch()
 
   const {
     repositories,
@@ -49,20 +53,24 @@ const RepositoryList: React.FC = () => {
 
   useEffect(() => {
     if (debouncedSearchValue) {
-      dispatch(setSearchQuery(debouncedSearchValue))
-      dispatch(setCurrentPage(1))
+      dispatch(setSearchQuery(debouncedSearchValue || searchQuery))
+      dispatch(setCurrentPage(currentPage || 1))
       dispatch(
-        fetchRepositories({ searchQuery: debouncedSearchValue, currentPage: 1 })
+        fetchRepositories({
+          searchQuery: debouncedSearchValue || searchQuery,
+          currentPage: currentPage || 1,
+        })
       )
     }
   }, [debouncedSearchValue])
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
+    dispatch(setCurrentPage(1))
   }
 
   const handlePageChange = (page: number, user: boolean) => {
-    !user ? dispatch(setCurrentPage(page)) : dispatch(setUserCurrentPage(page))
-    !user
+    user ? dispatch(setCurrentPage(page)) : dispatch(setUserCurrentPage(page))
+    user
       ? dispatch(fetchRepositories({ searchQuery, currentPage: page }))
       : dispatch(fetchUserRepositories({ currentPage: page }))
   }

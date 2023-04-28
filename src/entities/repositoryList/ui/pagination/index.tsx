@@ -51,7 +51,7 @@ export const Pagination: React.FC<Props> = ({
         <MainButton
           sizeVariant={'pagination'}
           key={page}
-          onClick={() => handlePageChange(page, !repositories.length)}
+          onClick={() => handlePageChange(page, !!repositories.length)}
           disabled={
             (repositories.length && currentPage === page) ||
             (!repositories.length && userReposCurrentPage === page)
