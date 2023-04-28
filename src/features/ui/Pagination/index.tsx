@@ -19,8 +19,10 @@ const Pagination: React.FC<Props> = ({
 }) => {
   const pageNumbers = []
   const pageCount = Math.ceil(totalItems / itemsPerPage)
-  const startIndex = Math.max(1, currentPage - Math.floor(maxPages / 2))
-  const endIndex = Math.min(pageCount, startIndex + maxPages - 1)
+  const startIndex =
+    totalItems > 100 ? 1 : Math.max(1, currentPage - Math.floor(maxPages / 2))
+  const endIndex =
+    totalItems > 100 ? 10 : Math.min(pageCount, startIndex + maxPages - 1)
 
   for (let i = startIndex; i <= endIndex; i++) {
     pageNumbers.push(i)
