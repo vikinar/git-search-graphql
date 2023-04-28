@@ -12,18 +12,14 @@ import {
 } from '@entities/repositoryList/models/search'
 import ListItemCard from '@entities/repositoryList/ui/listItem'
 import { Pagination } from '@entities/repositoryList/ui/pagination'
-import {
-  useAppDispatch,
-  useAppSelector,
-  useAppThunkDispatch,
-} from '@features/hooks/store'
+import { useAppDispatch, useAppSelector } from '@features/hooks/store'
 import useDebounce from '@features/hooks/useDebounce'
 import { RootState } from '@src/app/store'
 import { BaseInput } from '@ui/Inputs/BaseInput'
 import { BaseLayout } from '@ui/Layout/BaseLayout'
 
 const RepositoryList: React.FC = () => {
-  const dispatch = useAppThunkDispatch()
+  const dispatch = useAppDispatch()
 
   const {
     repositories,
