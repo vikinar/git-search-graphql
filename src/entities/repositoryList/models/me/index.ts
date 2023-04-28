@@ -1,7 +1,7 @@
 import { client } from '@api/base'
 import { OWN_REPOSITORIES_QUERY } from '@api/repolist/me/query'
 import { RepositoriesState, Repository } from '@api/repolist/types'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AnyAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@src/app/store'
 
 const initialState: RepositoriesState = {

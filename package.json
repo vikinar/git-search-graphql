@@ -16,14 +16,18 @@
     "@apollo/client": "^3.7.12",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/compose-function": "^0.0.30",
+    "@types/redux-persist": "^4.3.1",
     "compose-function": "^3.0.3",
     "graphql": "^16.6.0",
     "postcss": "^8.4.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
+    "react-persist": "^1.0.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "stylelint-prettier": "^3.0.0"
   },
   "devDependencies": {

@@ -1,7 +1,14 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
-import { store } from '../store'
+import { persistor, store } from '../store'
 
 export const withStore = (component: () => ReactNode) => () =>
-  <Provider store={store}>{component()}</Provider>
+  (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {component()}
+      </PersistGate>
+    </Provider>
+  )

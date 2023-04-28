@@ -20,8 +20,6 @@ import { BaseLayout } from '@ui/Layout/BaseLayout'
 
 const RepositoryList: React.FC = () => {
   const dispatch = useAppDispatch()
-  const [searchTerm, setSearchTerm] = useState('')
-  const debouncedSearchValue = useDebounce<string>(searchTerm, 500)
 
   const {
     repositories,
@@ -29,55 +27,40 @@ const RepositoryList: React.FC = () => {
     error,
     searchQuery,
     currentPage,
-    hasNextPage,
     totalCount,
   } = useAppSelector((state: RootState) => state.repositories)
+  const [searchTerm, setSearchTerm] = useState(searchQuery || '')
+  const debouncedSearchValue = useDebounce<string>(searchTerm, 500)
 
   const {
     repositories: userRepositories,
     isLoading: userReposIsLoading,
     error: userReposError,
     currentPage: userReposCurrentPage,
-    hasNextPage: userReposHasNextPage,
     totalCount: userReposTotalCount,
   } = useAppSelector((state: RootState) => state.userRepositories)
 
-  const memoPage = parseInt(sessionStorage.getItem('page') as string)
-  const memoSearchField = sessionStorage.getItem('searchField')
-
   useEffect(() => {
-    if (!searchTerm) {
+    if (!debouncedSearchValue.length) {
       dispatch(setUserCurrentPage(1))
       dispatch(fetchUserRepositories({ currentPage: 1 }))
     }
-  }, [dispatch, searchTerm])
+  }, [dispatch, debouncedSearchValue])
 
   useEffect(() => {
-    if (debouncedSearchValue && (!memoSearchField || !memoPage)) {
+    if (debouncedSearchValue) {
       dispatch(setSearchQuery(debouncedSearchValue))
       dispatch(setCurrentPage(1))
       dispatch(
         fetchRepositories({ searchQuery: debouncedSearchValue, currentPage: 1 })
       )
-    } else if (!debouncedSearchValue && (memoSearchField || memoPage)) {
-      dispatch(setSearchQuery(memoSearchField))
-      dispatch(setCurrentPage(memoPage))
-      dispatch(
-        fetchRepositories({
-          searchQuery: memoSearchField as string,
-          currentPage: memoPage,
-        })
-      )
     }
-  }, [debouncedSearchValue, memoSearchField, memoPage])
+  }, [debouncedSearchValue])
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
-    sessionStorage.setItem('searchField', `${e.target.value}`)
-    sessionStorage.removeItem('page')
   }
 
   const handlePageChange = (page: number, user: boolean) => {
-    sessionStorage.setItem('page', `${page}`)
     !user ? dispatch(setCurrentPage(page)) : dispatch(setUserCurrentPage(page))
     !user
       ? dispatch(fetchRepositories({ searchQuery, currentPage: page }))
@@ -89,7 +72,7 @@ const RepositoryList: React.FC = () => {
       headerChildren={
         <BaseInput
           type="search"
-          value={searchTerm || (memoSearchField as string)}
+          value={searchTerm}
           onChange={(e) => handleSearchChange(e)}
           id={'search'}
           variant={'rounded'}
@@ -102,12 +85,13 @@ const RepositoryList: React.FC = () => {
         !userReposIsLoading && (
           <Pagination
             handlePageChange={handlePageChange}
-            currentPage={memoPage || currentPage}
+            currentPage={currentPage}
             repositories={repositories}
             userRepositories={userRepositories}
             userReposCurrentPage={userReposCurrentPage}
             totalCount={totalCount}
             userReposTotalCount={userReposTotalCount}
+            searchField={searchTerm}
           />
         )
       }
@@ -117,13 +101,13 @@ const RepositoryList: React.FC = () => {
 
       {!isLoading &&
         !userReposIsLoading &&
-        !searchTerm &&
-        !memoSearchField &&
+        (!searchTerm.length || !repositories.length) &&
         userRepositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
       {!isLoading &&
-        memoSearchField &&
+        repositories.length &&
+        searchTerm &&
         repositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}

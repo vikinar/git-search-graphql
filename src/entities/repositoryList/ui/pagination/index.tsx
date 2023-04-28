@@ -11,6 +11,7 @@ interface Props {
   currentPage: number
   userRepositories?: Repository[]
   userReposCurrentPage: number
+  searchField?: string
 }
 export const Pagination: React.FC<Props> = ({
   repositories,
@@ -19,12 +20,14 @@ export const Pagination: React.FC<Props> = ({
   handlePageChange,
   currentPage,
   userReposCurrentPage,
+  userRepositories,
+  searchField,
 }) => {
   const ITEMS_PER_PAGE = 10
 
   const pageNumbers = useMemo(() => {
     let pageCount: number
-    if (!repositories.length) {
+    if (!repositories.length || !searchField) {
       pageCount =
         userReposTotalCount > 100
           ? Math.ceil(100 / ITEMS_PER_PAGE)
@@ -41,7 +44,7 @@ export const Pagination: React.FC<Props> = ({
       pageNumbers.push(i)
     }
     return pageNumbers
-  }, [totalCount, userReposTotalCount, repositories])
+  }, [totalCount, userRepositories, repositories])
   return (
     <>
       {pageNumbers.map((page) => (
