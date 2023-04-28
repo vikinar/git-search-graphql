@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { fetchRepository } from '@entities/repoCard/models/repository'
-import { RepoCard } from '@entities/repoCard/ui/repoCard'
+import { RepoCard } from '@entities/repoCard/ui/RepoCard'
 import { useAppDispatch, useAppSelector } from '@features/hooks/store'
 import { RootState } from '@src/app/store'
 import { BaseLayout } from '@ui/Layout/BaseLayout'

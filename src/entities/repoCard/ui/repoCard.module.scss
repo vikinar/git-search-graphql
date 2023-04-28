@@ -5,3 +5,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.owner{
+  display: flex;
+  align-items: center;
+  &_img{
+    width: 100px;
+    border: 2px solid var(--primary-color);
+    border-radius: 100px;
+    margin: 10px 15px 10px 0;
+  }
+}

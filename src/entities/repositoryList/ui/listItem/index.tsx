@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Repository } from '@api/repolist/types'
 import { MainButton } from '@ui/Buttons/MainButton'
-import { Text, Title } from '@ui/Typography'
+import { RepoDescriptionItem } from '@ui/Repo/RepoDescriptionItem'
+import { Title } from '@ui/Typography'
 
 import styles from './listItem.module.scss'
 
@@ -20,10 +21,27 @@ const ListItemCard: React.FC<Props> = ({ repo }) => {
       <Title style={{ color: `var(--primary-color)` }} size={'medium'}>
         {repo.name}
       </Title>
-      <Text>Description: {repo.description}</Text>
-      <Text>Stars: {repo.stargazerCount}</Text>
-      <Text>Forks: {repo.forkCount}</Text>
-      <Text>Owner: {repo.owner.login}</Text>
+      <RepoDescriptionItem
+        title={`Description`}
+        description={repo.description}
+      />
+      <section style={{ display: 'flex' }}>
+        <RepoDescriptionItem
+          title={'Stars:'}
+          description={repo.stargazerCount}
+          flex={true}
+        />
+        <RepoDescriptionItem
+          title={'Forks:'}
+          description={repo.forkCount}
+          flex={true}
+        />
+        <RepoDescriptionItem
+          title={`Owner:`}
+          description={repo.owner.login}
+          flex={true}
+        />
+      </section>
       <MainButton
         sizeVariant={'large'}
         variant={'rounded'}

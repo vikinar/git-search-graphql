@@ -111,8 +111,8 @@ const RepositoryList: React.FC = () => {
           <ListItemCard key={repo.id} repo={repo} />
         ))}
       {!isLoading &&
-        repositories.length &&
-        debouncedSearchValue &&
+        !!repositories.length &&
+        !!debouncedSearchValue &&
         repositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
