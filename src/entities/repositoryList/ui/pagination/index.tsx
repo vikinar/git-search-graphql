@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { Repository } from '@api/repolist/types'
 import { MainButton } from '@ui/Buttons/MainButton'
+import Pagination from '@ui/Pagination'
 
 interface Props {
   repositories: Repository[]
@@ -13,7 +14,8 @@ interface Props {
   userReposCurrentPage: number
   searchField?: string
 }
-export const Pagination: React.FC<Props> = ({
+
+export const RepoPagination: React.FC<Props> = ({
   repositories,
   userReposTotalCount,
   totalCount,
@@ -25,42 +27,20 @@ export const Pagination: React.FC<Props> = ({
 }) => {
   const ITEMS_PER_PAGE = 10
 
-  const pageNumbers = useMemo(() => {
-    let pageCount: number
-    if (!repositories.length || !searchField) {
-      pageCount =
-        userReposTotalCount > 100
-          ? Math.ceil(100 / ITEMS_PER_PAGE)
-          : Math.ceil(userReposTotalCount / ITEMS_PER_PAGE)
-    } else {
-      pageCount =
-        totalCount > 100
-          ? Math.ceil(100 / ITEMS_PER_PAGE)
-          : Math.ceil(totalCount / ITEMS_PER_PAGE)
-    }
-    const pageNumbers = []
+  const totalItems =
+    !repositories.length || !searchField ? userReposTotalCount : totalCount
 
-    for (let i = 1; i <= pageCount && i <= 10; i++) {
-      pageNumbers.push(i)
-    }
-    return pageNumbers
-  }, [totalCount, userRepositories, repositories])
+  const handlePaginationChange = (page: number) => {
+    handlePageChange(page, !!repositories.length)
+  }
+
   return (
     <>
-      {pageNumbers.map((page) => (
-        <MainButton
-          sizeVariant={'pagination'}
-          key={page}
-          onClick={() => handlePageChange(page, !!repositories.length)}
-          disabled={
-            (repositories.length && currentPage === page) ||
-            (!repositories.length && userReposCurrentPage === page)
-          }
-          style={{ margin: '0 2px' }}
-        >
-          {page}
-        </MainButton>
-      ))}
+      <Pagination
+        totalItems={totalItems}
+        currentPage={repositories.length ? currentPage : userReposCurrentPage}
+        onPageChange={handlePaginationChange}
+      />
     </>
   )
 }

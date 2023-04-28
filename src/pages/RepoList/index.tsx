@@ -11,7 +11,7 @@ import {
   setSearchQuery,
 } from '@entities/repositoryList/models/search'
 import ListItemCard from '@entities/repositoryList/ui/listItem'
-import { Pagination } from '@entities/repositoryList/ui/pagination'
+import { RepoPagination } from '@entities/repositoryList/ui/pagination'
 import { useAppDispatch, useAppSelector } from '@features/hooks/store'
 import useDebounce from '@features/hooks/useDebounce'
 import { RootState } from '@src/app/store'
@@ -42,6 +42,7 @@ const RepositoryList: React.FC = () => {
 
   useEffect(() => {
     if (!debouncedSearchValue.length) {
+      dispatch(setSearchQuery(''))
       dispatch(setUserCurrentPage(1))
       dispatch(fetchUserRepositories({ currentPage: 1 }))
     }
@@ -87,7 +88,7 @@ const RepositoryList: React.FC = () => {
       pagination={
         !isLoading &&
         !userReposIsLoading && (
-          <Pagination
+          <RepoPagination
             handlePageChange={handlePageChange}
             currentPage={currentPage}
             repositories={repositories}
@@ -105,13 +106,13 @@ const RepositoryList: React.FC = () => {
 
       {!isLoading &&
         !userReposIsLoading &&
-        (!searchTerm.length || !repositories.length) &&
+        (!searchTerm.length || !debouncedSearchValue.length) &&
         userRepositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
       {!isLoading &&
         repositories.length &&
-        searchTerm &&
+        debouncedSearchValue &&
         repositories?.map((repo: Repository) => (
           <ListItemCard key={repo.id} repo={repo} />
         ))}
