@@ -1,15 +1,7 @@
-import { CSSProperties, ChangeEventHandler, RefObject } from 'react'
+import { CSSProperties, ChangeEventHandler, RefObject, HTMLProps } from 'react'
 
-export interface IBaseInputProps {
-  value?: string
-  type: 'text' | 'password' | 'search' | 'url'
-  id: string
-  placeholder?: string
+export interface IBaseInputProps extends Omit<HTMLProps<HTMLInputElement>, 'ref'> {
   autofocus?: boolean
-  style?: CSSProperties
-  onBlur?: ChangeEventHandler<HTMLInputElement>
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  disabled?: boolean
   ref?: RefObject<HTMLInputElement>
   hasError?: boolean
   variant: 'rounded' | 'base'
